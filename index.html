@@ -18,7 +18,7 @@
         }
     </script>
     
-    <!-- Gmarket Sans 폰트 불러오기 -->
+    <!-- Gmarket Sans 폰트 불러오기 및 글로벌 트랜지션 정의 -->
     <style>
         @font-face {
             font-family: 'GmarketSans';
@@ -67,6 +67,15 @@
         }
         .animate-float {
             animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes gold-sparkle {
+            0% { transform: scale(0.85) rotate(0deg); opacity: 0; filter: drop-shadow(0 0 0px rgba(255,215,0,0)); }
+            50% { filter: drop-shadow(0 0 30px rgba(255,215,0,0.85)); }
+            100% { transform: scale(1) rotate(360deg); opacity: 1; filter: drop-shadow(0 0 15px rgba(255,215,0,0.4)); }
+        }
+        .animate-sparkle {
+            animation: gold-sparkle 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
         /* 커스텀 스크롤바 */
@@ -449,7 +458,7 @@
                             <!-- 유저 소유 골드 정보 -->
                             <div class="flex items-center gap-1 bg-yellow-500/10 border border-yellow-500/30 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full">
                                 <span class="text-xs sm:text-sm">🪙</span>
-                                <span id="user-gold" class="text-tftgold font-bold text-xs sm:text-sm">30G</span>
+                                <span id="user-gold" class="text-tftgold font-bold text-xs sm:text-sm">60G</span>
                             </div>
                         </div>
                         <p class="text-[10px] sm:text-xs text-tftgray mb-4 leading-relaxed">
@@ -660,6 +669,48 @@
     </div>
 </div>
 
+<!-- 👑 3성 진화 성공 축하 팝업 모달 👑 -->
+<div id="threestar-modal" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/90 backdrop-blur-lg opacity-0 pointer-events-none transition-all duration-500">
+    <div class="bg-gradient-to-b from-tftnavy to-tftdark border-2 border-tftgold rounded-3xl w-full max-w-md p-6 sm:p-8 text-center relative shadow-[0_0_50px_rgba(255,215,0,0.4)] transform scale-90 transition-transform duration-500" id="threestar-modal-card">
+        <!-- 배경 광채 서클 -->
+        <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-28 h-28 bg-tftgold/20 rounded-full blur-xl pointer-events-none"></div>
+
+        <!-- 눈부신 에모지 그래픽 -->
+        <div class="w-24 h-24 sm:w-28 sm:h-28 mx-auto bg-gradient-to-br from-tftgold to-tftorange rounded-full flex items-center justify-center text-5xl sm:text-6xl mb-6 relative border-4 border-tftgold/60" id="modal-champ-holder">
+            <span id="modal-champ-emoji" class="animate-float">🦊</span>
+            <!-- 보너스 황금 뒤집개 오버레이 -->
+            <div class="absolute -bottom-1 -right-1 bg-tftdark p-1 rounded-full border border-tftgold text-xs">👑</div>
+        </div>
+
+        <h3 class="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-tftgold via-yellow-300 to-tftorange tracking-wide gold-glow" id="modal-champ-name">
+            3성 미니 아리 탄생!
+        </h3>
+        
+        <p class="text-xs uppercase tracking-widest font-extrabold text-tftorange mt-1">Legendary Evolution Complete</p>
+
+        <!-- 칭찬 멘트 구역 -->
+        <div class="my-6 p-4 bg-white/5 rounded-2xl border border-white/10">
+            <p id="modal-congrat-text" class="text-xs sm:text-sm font-semibold text-gray-200 leading-relaxed">
+                "이 험난한 상점 속에서 최고의 선택을 하셨군요! 진정한 실력자는 상점 운마저 개척하는 법입니다. 당신의 지략은 이미 마스터 티어 수준입니다!"
+            </p>
+        </div>
+
+        <div class="space-y-2.5">
+            <!-- 게임 플레이 유도 버튼 -->
+            <a href="https://teamfighttactics.leagueoflegends.com/ko-kr/" target="_blank" class="block w-full py-3.5 bg-gradient-to-r from-tftorange via-tftgold to-yellow-400 text-tftdark font-black text-sm sm:text-base rounded-xl transition-all duration-300 shadow-lg shadow-tftorange/30 hover:scale-[1.03] transform">
+                🎮 지금 진짜 전장에서 기물 맞추기!
+            </a>
+            
+            <button onclick="closeThreeStarModal()" class="w-full py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl text-xs sm:text-sm font-bold transition-all">
+                상점에서 기물 더 모으기
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 💥 극적 연출을 위한 전체 화면 백색 플래시 레이어 💥 -->
+<div id="screen-flash" class="fixed inset-0 bg-white z-[200] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
 <!-- JAVASCRIPT LOGIC (Vanilla) -->
 <script>
     /* --- 다크/라이트 테마 제어 시스템 --- */
@@ -733,6 +784,7 @@
         document.body.style.overflow = ''; // 스크롤 잠금 해제
     }
 
+    /* --- STREAMING_CHUNK:Implementing reroll gameplay math and upgrades... --- */
     /* --- [핵심 인터랙티브 요소] 리롤 미니 게임 시뮬레이터 시스템 --- */
     // 챔피언 후보 기물 풀 데이터
     const CHAMPION_POOL = [
@@ -743,14 +795,23 @@
         { name: "야스오", emoji: "🌪️", synergy: "학살자", cost: 5, tier: 5, bg: "bg-yellow-500/10 border-yellow-500/20 text-yellow-400" }
     ];
 
+    // 영웅별 3성 달성 전용 맞춤 극찬 칭찬 메시지 풀 (1~2줄 분량으로 심플하게 최적화)
+    const PRAISE_MESSAGES = {
+        "팽구": "귀여움 폭발! '3성 황금 팽구' 완성! 이 귀여운 펭구의 기운을 받아 실전에서도 기분 좋은 승리를 거두어 보세요!",
+        "말랑이": "심쿵 유발! '3성 말랑이' 진화 성공! 끝까지 포기하지 않고 끈기 있게 덱을 빌드업한 당신의 전략이 빛났습니다.",
+        "뿔보": "든든한 수호자! '3성 뿔보' 탄생! 굳건한 방어벽처럼 어떤 난관도 뚫어낼 수 있는 강력한 배치를 완성하셨네요.",
+        "미니 아리": "🎉 황금빛 매혹! '3성 미니 아리' 강림! 화려한 조합으로 전장을 완벽하게 사로잡을 준비가 끝났습니다. 👑",
+        "야스오": "🌪️ 바람과 하나가 된 '3성 야스오' 완성! 5코스트 전설을 끝내 진화시킨 당신은 판을 지배할 진정한 전술가입니다."
+    };
+
     // 게임 변수
-    let gold = 30;
+    let gold = 60;
     let board = []; // 최대 6개의 대기석 기물 저장
     let currentShop = []; // 현재 떠있는 5개의 상점 기물
 
     // 미니 게임 초기화
     function resetRerollGame() {
-        gold = 30;
+        gold = 60;
         board = [];
         currentShop = [];
         updateGoldUI();
@@ -964,9 +1025,68 @@
                 return true;
             });
             const baseChamp = CHAMPION_POOL.find(p => p.name === champName);
-            board.push({ ...baseChamp, stars: 3, id: Date.now() });
-            triggerNotification(`👑 전설 탄생! 3성 무적 [${champName}] 완성!! 👑`);
+            const upgradedChamp = { ...baseChamp, stars: 3, id: Date.now() };
+            board.push(upgradedChamp);
+            
+            // 💥 [추가 개발] 3성 달성 전용 연출 및 팝업 작동!
+            triggerThreeStarCelebration(upgradedChamp);
         }
+    }
+
+    // 💥 3성 달성 극적 시각/청각 연출 작동기
+    function triggerThreeStarCelebration(champ) {
+        // 1. 백색 플래시 라이트 활성화
+        const flash = document.getElementById('screen-flash');
+        flash.style.opacity = '0.9';
+        flash.style.pointerEvents = 'auto';
+
+        // 서서히 페이드아웃 처리
+        setTimeout(() => {
+            flash.style.opacity = '0';
+            flash.style.pointerEvents = 'none';
+        }, 300);
+
+        // 2. 3성 축하 모달 데이터 맵핑
+        document.getElementById('modal-champ-emoji').innerText = champ.emoji;
+        document.getElementById('modal-champ-name').innerText = `👑 3성 ${champ.name} 진화 성공!`;
+        
+        // 맞춤형 칭찬 멘트 가져오기
+        const customPraise = PRAISE_MESSAGES[champ.name] || "당신의 덱 구성력은 타의 추종을 불허합니다! 완벽한 확률 계산과 타이밍 관리의 마법사군요!";
+        document.getElementById('modal-congrat-text').innerText = customPraise;
+
+        // 3. 모달 열기 및 바디 스크롤 방지
+        const modal = document.getElementById('threestar-modal');
+        const card = document.getElementById('threestar-modal-card');
+        
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modal.classList.add('opacity-100');
+        
+        card.classList.remove('scale-90');
+        card.classList.add('scale-100');
+        
+        // 아이콘에 스파클 회전 애니메이션 탑재
+        const holder = document.getElementById('modal-champ-holder');
+        holder.classList.add('animate-sparkle');
+
+        document.body.style.overflow = 'hidden';
+    }
+
+    // 3성 축하 모달 닫기
+    function closeThreeStarModal() {
+        const modal = document.getElementById('threestar-modal');
+        const card = document.getElementById('threestar-modal-card');
+        const holder = document.getElementById('modal-champ-holder');
+        
+        modal.classList.remove('opacity-100');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        
+        card.classList.remove('scale-100');
+        card.classList.add('scale-90');
+        
+        holder.classList.remove('animate-sparkle');
+
+        document.body.style.overflow = '';
+        triggerNotification("👑 전설급 챔피언 제작에 성공했습니다! 대기석을 채워 더 강력한 연출에 도전해 보세요!");
     }
 
     // 대기석 기물 클릭 판매 시스템
@@ -1055,7 +1175,8 @@
         if (e.key === 'd' || e.key === 'D' || e.key === 'ㅇ') {
             // 모달이 열려 있지 않을 때만 단축키 활성화
             const modal = document.getElementById('guide-modal');
-            if (modal.classList.contains('opacity-0')) {
+            const celebrationModal = document.getElementById('threestar-modal');
+            if (modal.classList.contains('opacity-0') && celebrationModal.classList.contains('opacity-0')) {
                 rollShop();
             }
         }
