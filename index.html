@@ -297,6 +297,10 @@
 <section id="hero" class="relative min-h-screen flex items-center justify-center pt-20 sm:pt-28 pb-12 sm:pb-16 overflow-hidden">
     <!-- 추상적인 우주 성간 느낌의 오렌지&퍼플 그라데이션 배경 -->
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,140,0,0.12)_0%,rgba(11,15,43,0.95)_70%)] z-0"></div>
+    
+    <!-- 은은한 무드를 더해줄 투명 파티클 캔버스 레이어 -->
+    <canvas id="hero-particles" class="absolute inset-0 pointer-events-none z-0"></canvas>
+    
     <div class="absolute top-1/4 left-[5%] w-64 h-64 sm:w-96 sm:h-96 bg-tftorange/5 rounded-full blur-3xl animate-pulse"></div>
     <div class="absolute bottom-1/4 right-[5%] w-64 h-64 sm:w-96 sm:h-96 bg-tftgold/5 rounded-full blur-3xl animate-pulse delay-700"></div>
 
@@ -981,6 +985,71 @@
         triggerNotification(`🪙 [${champ.name} ${champ.stars}성]을 판매하여 ${sellValue}G를 획득했습니다.`);
     }
 
+    // --- 은은한 캔버스 파티클 효과 메커니즘 ---
+    const canvas = document.getElementById('hero-particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const maxParticles = 55; // 화면을 가득 채우되 어지럽지 않은 황금 개수
+
+    class Particle {
+        constructor() {
+            this.reset();
+            this.y = Math.random() * canvas.height; // 로드 시 전역에 흩뿌림
+        }
+
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = canvas.height + Math.random() * 20;
+            this.size = Math.random() * 2.2 + 0.6; // 0.6px ~ 2.8px 사이의 은은한 점들
+            this.speedY = -(Math.random() * 0.35 + 0.1); // 느릿하게 상승
+            this.speedX = (Math.random() - 0.5) * 0.15; // 미풍에 흩날리듯 좌우 흔들림
+            this.opacity = Math.random() * 0.45 + 0.05; // 너무 쨍하지 않고 불규칙한 불투명도
+        }
+
+        update() {
+            this.y += this.speedY;
+            this.x += this.speedX;
+            // 화면 밖으로 나가거나 수명이 다하면 다시 아래에서 리젠
+            if (this.y < 0 || this.x < 0 || this.x > canvas.width) {
+                this.reset();
+            }
+        }
+
+        draw() {
+            const isLight = document.documentElement.classList.contains('light');
+            // 라이트 모드일 땐 부드러운 다크앰버색, 다크 모드일 땐 오팔 황금빛 적용
+            const colorRGB = isLight ? '180, 83, 9' : '255, 215, 0';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${colorRGB}, ${this.opacity})`;
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        const heroSection = document.getElementById('hero');
+        canvas.width = heroSection.offsetWidth;
+        canvas.height = heroSection.offsetHeight;
+        particles = [];
+        for (let i = 0; i < maxParticles; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animateParticles);
+    }
+
+    // 모바일 기기 회전 및 반응형 창크기 변동 대비 대응
+    window.addEventListener('resize', () => {
+        initParticles();
+    });
+
     // 키보드 D키 단축키 지원 (데스크톱 경험 향상)
     document.addEventListener('keydown', (e) => {
         if (e.key === 'd' || e.key === 'D' || e.key === 'ㅇ') {
@@ -996,6 +1065,9 @@
     window.onload = function() {
         initializeTheme();
         resetRerollGame();
+        // 파티클 백그라운드 구동 개시
+        initParticles();
+        animateParticles();
     };
 </script>
 
