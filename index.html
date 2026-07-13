@@ -8,6 +8,16 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- 테마 깜빡임 방지를 위한 조기 테마 분석기 -->
+    <script>
+        const savedTheme = localStorage.getItem('tft-theme') || 'dark';
+        if (savedTheme === 'light') {
+            document.documentElement.classList.add('light');
+        } else {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+    
     <!-- Gmarket Sans 폰트 불러오기 -->
     <style>
         @font-face {
@@ -32,6 +42,7 @@
         body {
             font-family: 'GmarketSans', sans-serif;
             -webkit-tap-highlight-color: transparent; /* 모바일 터치 시 파란 박스 방지 */
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
 
         /* 커스텀 골드/주황 그라데이션 광채 효과 */
@@ -46,6 +57,7 @@
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 215, 0, 0.15);
+            transition: background-color 0.5s ease, border-color 0.5s ease;
         }
         
         /* 펄스 및 플로팅 애니메이션 */
@@ -63,6 +75,7 @@
         }
         ::-webkit-scrollbar-track {
             background: #050716;
+            transition: background-color 0.5s ease;
         }
         ::-webkit-scrollbar-thumb {
             background: #FF8C00;
@@ -70,6 +83,136 @@
         }
         ::-webkit-scrollbar-thumb:hover {
             background: #FFD700;
+        }
+
+        /* --- 라이트 모드 커스텀 테마 스타일 지정 --- */
+        html.light body {
+            background-color: #f1f5f9; /* slate-100 */
+            color: #0f172a; /* slate-900 */
+        }
+        
+        html.light #hero {
+            background: radial-gradient(circle at center, rgba(255, 140, 0, 0.08) 0%, rgba(241, 245, 249, 1) 70%);
+        }
+        
+        html.light #value-prop {
+            background-color: rgba(241, 245, 249, 0.6);
+            border-color: rgba(255, 140, 0, 0.15);
+        }
+        
+        html.light #showcase {
+            background-color: rgba(241, 245, 249, 0.8);
+        }
+
+        html.light #cta {
+            background: radial-gradient(ellipse at bottom, rgba(255, 140, 0, 0.08) 0%, rgba(241, 245, 249, 1) 80%);
+            border-color: rgba(255, 140, 0, 0.15);
+        }
+
+        html.light .navy-glass {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(255, 140, 0, 0.25);
+            color: #0f172a;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+        
+        html.light .text-tftgray {
+            color: #475569; /* slate-600 */
+        }
+        
+        html.light .text-white {
+            color: #0f172a; /* slate-900 */
+        }
+
+        html.light .bg-tftnavy\/80 {
+            background-color: rgba(241, 245, 249, 0.9);
+            color: #0f172a;
+        }
+
+        html.light .bg-tftnavy {
+            background-color: #ffffff;
+            color: #0f172a;
+        }
+        
+        html.light .bg-tftdark {
+            background-color: #f8fafc;
+        }
+        
+        html.light .bg-tftdark\/40 {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        html.light .bg-tftdark\/60 {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        html.light .bg-gradient-to-b {
+            background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.85), rgba(241, 245, 249, 0.95));
+            color: #0f172a;
+        }
+
+        html.light .border-white\/5 {
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        html.light .border-tftgold\/10 {
+            border-color: rgba(255, 140, 0, 0.2);
+        }
+
+        html.light .bg-black\/40 {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+
+        html.light .text-gray-300 {
+            color: #334155;
+        }
+
+        html.light #board-slots > div {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        html.light #board-slots > div.border-tftgold {
+            border-color: #FFD700;
+        }
+
+        html.light #board-slots > div.border-blue-400\/80 {
+            border-color: #60a5fa;
+        }
+
+        html.light ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        /* --- 라이트 모드 고대비 텍스트 가독성 개선 --- */
+        html.light .text-tftgold,
+        html.light .text-yellow-400,
+        html.light .text-yellow-500 {
+            color: #B45309 !important; /* 눈부시지 않은 차분하고 짙은 황금색(Amber-700) */
+        }
+
+        html.light .text-tftorange {
+            color: #C2410C !important; /* 가독성이 향상된 짙은 주황색(Orange-700) */
+        }
+
+        html.light .gold-glow {
+            text-shadow: 0 0 20px rgba(180, 83, 9, 0.25) !important; /* 라이트 모드 전용 은은한 황금빛 */
+        }
+
+        html.light .border-tftgold\/40 {
+            border-color: rgba(180, 83, 9, 0.4) !important;
+        }
+
+        html.light .border-tftgold\/10 {
+            border-color: rgba(180, 83, 9, 0.15) !important;
+        }
+
+        html.light .border-tftgold {
+            border-color: #B45309 !important;
+        }
+
+        html.light .text-tftgold\/80 {
+            color: rgba(180, 83, 9, 0.8) !important;
         }
     </style>
     
@@ -114,6 +257,18 @@
         
         <!-- 우측 액션 버튼들 -->
         <div class="flex items-center gap-2">
+            <!-- 다크/라이트 테마 전환 토글 버튼 -->
+            <button onclick="toggleTheme()" id="theme-toggle-btn" class="p-1.5 sm:p-2 border border-tftgold/40 hover:border-tftgold text-tftgold hover:bg-tftgold/10 rounded-lg transition-all flex items-center justify-center focus:outline-none" aria-label="테마 전환">
+                <!-- 해 (라이트모드 때 보임) -->
+                <svg id="sun-icon" class="w-4 h-4 sm:w-5 sm:h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707m12.728 12.728A9 9 0 115.636 5.636m12.728 12.728L12 12"/>
+                </svg>
+                <!-- 달 (다크모드 때 보임) -->
+                <svg id="moon-icon" class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                </svg>
+            </button>
+
             <button onclick="openGuideModal()" class="px-3 py-1.5 sm:px-4 sm:py-2 border border-tftgold/40 hover:border-tftgold text-tftgold hover:bg-tftgold/10 rounded-lg transition-all text-[10px] sm:text-xs font-bold uppercase tracking-wider">
                 3분 가이드
             </button>
@@ -169,7 +324,7 @@
         </div>
     </div>
 
-    <!-- 스크롤 다운 가이드 화살표 (모바일 기기에서 겹침 방지를 위해 마진 확보) -->
+    <!-- 스크롤 다운 가이드 화살표 -->
     <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1 opacity-60 hover:opacity-100 transition-opacity">
         <span class="text-[10px] uppercase tracking-widest font-semibold text-tftgray">스크롤</span>
         <svg class="w-5 h-5 text-tftgold animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -503,6 +658,45 @@
 
 <!-- JAVASCRIPT LOGIC (Vanilla) -->
 <script>
+    /* --- 다크/라이트 테마 제어 시스템 --- */
+    function initializeTheme() {
+        const currentTheme = localStorage.getItem('tft-theme') || 'dark';
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+
+        if (currentTheme === 'light') {
+            document.documentElement.classList.add('light');
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+        } else {
+            document.documentElement.classList.remove('light');
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+        }
+    }
+
+    function toggleTheme() {
+        const isLight = document.documentElement.classList.contains('light');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+
+        if (isLight) {
+            // 라이트 -> 다크 전환
+            document.documentElement.classList.remove('light');
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+            localStorage.setItem('tft-theme', 'dark');
+            triggerNotification("🌙 다크 모드가 활성화되었습니다.");
+        } else {
+            // 다크 -> 라이트 전환
+            document.documentElement.classList.add('light');
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+            localStorage.setItem('tft-theme', 'light');
+            triggerNotification("☀️ 라이트 모드가 활성화되었습니다.");
+        }
+    }
+
     /* --- 모바일 메뉴 제어 시스템 --- */
     function toggleMobileMenu() {
         const menu = document.getElementById('mobile-menu');
@@ -639,7 +833,6 @@
         });
     }
 
-    /* --- STREAMING_CHUNK: Finalizing the star upgrade (combination) system and viewport responsive handlers... --> */
     // 대기석 보드 렌더러
     function renderBoard() {
         const boardSlots = document.getElementById('board-slots');
@@ -713,7 +906,7 @@
         const count = board.filter(c => c.name === newChamp.name && c.stars === 1).length;
         if (count >= 2) return true;
 
-        // 혹시 2성이 2개 있고 새로 산게 마침 1성이어서 2성 3개가 맞춰지는 극한의 경우도 합성 가능
+        // 혹은 2성이 2개 있고 새로 산게 마침 1성이어서 2성 3개가 맞춰지는 경우도 합성 가능
         const star2Count = board.filter(c => c.name === newChamp.name && c.stars === 2).length;
         if (star2Count >= 2 && count >= 2) return true; 
 
@@ -801,6 +994,7 @@
 
     // 앱 기동 시 최초 리롤 가동
     window.onload = function() {
+        initializeTheme();
         resetRerollGame();
     };
 </script>
