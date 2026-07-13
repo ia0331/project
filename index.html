@@ -182,11 +182,11 @@
         }
 
         html.light #board-slots > div.border-tftgold {
-            border-color: #FFD700;
+            border-color: #B45309;
         }
 
         html.light #board-slots > div.border-blue-400\/80 {
-            border-color: #60a5fa;
+            border-color: #3b82f6;
         }
 
         html.light ::-webkit-scrollbar-track {
@@ -236,6 +236,9 @@
                         tftnavy: '#0B0F2B',
                         tftdark: '#050716',
                         tftgray: '#8C94C0'
+                    },
+                    screens: {
+                        'xs': '400px'
                     }
                 }
             }
@@ -409,49 +412,72 @@
     </div>
 </section>
 
-<!-- [3단계: 핵심 재미] 핵심 재미 및 실시간 리롤 체험 -->
+<!-- [3단계: 핵심 재미] 핵심 재미 및 실시간 시너지 빌더 & 리롤 체험 -->
 <section id="core-fun" class="py-16 sm:py-24 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
             <h2 class="text-[11px] sm:text-xs text-tftgold font-bold uppercase tracking-widest mb-2 sm:mb-3">핵심 게임플레이</h2>
             <p class="text-2xl sm:text-4xl md:text-5xl font-bold leading-tight">시너지 조합과 리롤의 짜릿함</p>
-            <p class="text-sm sm:text-base text-tftgray mt-3 sm:mt-4">매 판 완전히 새로운 챔피언 세트와 강력한 증강체들이 나타납니다. 행운을 당신만의 빌드로 승화시켜 보세요.</p>
+            <p class="text-sm sm:text-base text-tftgray mt-3 sm:mt-4">매 판 완전히 새로운 챔피언 세트와 강력한 증강체들이 나타납니다. 직접 시너지를 켜보거나 상점의 행운을 조합해 보세요.</p>
         </div>
 
         <div class="grid lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
-            <!-- 시너지 설명 카드 (왼쪽) -->
-            <div class="lg:col-span-5 navy-glass rounded-3xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
-                <div>
-                    <span class="inline-block bg-tftgold/10 text-tftgold border border-tftgold/30 px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold mb-4 sm:mb-6">
-                        🛡️ 매 시도마다 색다른 조합
-                    </span>
-                    <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">무한한 시너지 조합</h3>
-                    <p class="text-tftgray text-xs sm:text-sm leading-relaxed mb-6">
-                        서로 연관된 성향의 챔피언들을 같은 전장에 배치하면 시너지 능력이 활성화됩니다.<br><br>
-                        마법사 위주의 강력한 광역 데미지 폭발 빌드, 혹은 든든한 요새 수호 위주의 통곡의 벽 빌드 등 수십 수백 가지의 독창적인 메타를 직접 창조할 수 있습니다.
-                    </p>
+            
+            <!-- 🔮 [신규 업그레이드] 실시간 시너지 빌더 (왼쪽: lg:col-span-6) -->
+            <div class="lg:col-span-6 navy-glass rounded-3xl p-5 sm:p-6 md:p-8 border border-tftgold/30 flex flex-col justify-between relative">
+                <!-- 상단 타이틀 뱃지 - 이제 잘림 현상 방지를 위해 overflow-hidden 제거 및 우측 박스와 동일한 안전 규격 적용 -->
+                <div id="synergy-simulator-badge" class="absolute -top-3 left-4 sm:left-6 bg-gradient-to-r from-yellow-500 to-tftgold text-tftdark text-[10px] sm:text-xs font-black uppercase px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-md z-10">
+                    🔮 실시간 시너지 빌더 시뮬레이터
                 </div>
-                <!-- 예시 시너지 배지 그래픽 -->
-                <div class="space-y-3 bg-tftdark/40 p-3.5 sm:p-4 rounded-xl border border-white/5">
-                    <p class="text-[10px] sm:text-xs font-bold text-tftgold mb-1 sm:mb-2">실시간 보너스 시너지 시뮬레이션</p>
-                    <div class="flex gap-1.5 sm:gap-2 flex-wrap">
-                        <span class="bg-tftorange/20 text-tftorange border border-tftorange/40 text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-md font-semibold">🔮 마법사 (6)</span>
-                        <span class="bg-yellow-400/20 text-yellow-400 border border-yellow-400/30 text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-md font-semibold">🛡️ 수호자 (4)</span>
-                        <span class="bg-blue-400/20 text-blue-400 border border-blue-400/30 text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-md font-semibold">⚡ 요술사 (3)</span>
+                
+                <div class="pt-2">
+                    <h3 class="text-lg sm:text-xl font-bold mb-2 flex items-center gap-1.5 mt-2 sm:mt-0">
+                        🧩 조합 시너지 직접 조립하기
+                    </h3>
+                    <p class="text-tftgray text-xs sm:text-sm leading-relaxed mb-4">
+                        기물 목록에서 챔피언을 **터치하여 전장(최대 5명)에 투입**해 보세요. 중복 기물을 가려내어 <span class="text-tftgold font-semibold">동물특공대, 습격자, 메카, 암흑의 별</span> 시너지 달성율을 실시간 연산합니다.
+                    </p>
+                    
+                    <!-- 챔피언 풀 목록 (가독성 높은 2열 디자인 및 시너지 텍스트 노출) -->
+                    <div class="mb-4">
+                        <p class="text-[10px] sm:text-xs text-tftgold font-bold mb-2">👾 배치 가능한 기물 풀 (터치 시 전장 투입)</p>
+                        <!-- max-height를 제공하여 모바일에서도 컴팩트하게 조율 -->
+                        <div id="synergy-pool-slots" class="grid grid-cols-1 xs:grid-cols-2 gap-1.5 max-h-[220px] overflow-y-auto pr-1">
+                            <!-- JS 동적 렌더링 -->
+                        </div>
+                    </div>
+
+                    <!-- 활성화 전장 슬롯 (최대 5칸) -->
+                    <div class="mb-5 bg-tftdark/40 border border-white/5 p-3 rounded-2xl">
+                        <div class="flex justify-between items-center mb-2">
+                            <p class="text-[10px] sm:text-xs text-tftorange font-bold">🛡️ 활성화 전장 (최대 5명 배치 - 터치 시 제외)</p>
+                            <span id="board-count" class="text-[9px] sm:text-xs font-mono bg-tftorange/20 text-tftorange px-2 py-0.5 rounded-md">0 / 5</span>
+                        </div>
+                        <div id="synergy-board-slots" class="grid grid-cols-5 gap-1.5">
+                            <!-- JS 동적 렌더링 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 실시간 연동 시너지 점수판 배지 -->
+                <div class="space-y-2 bg-tftdark/60 p-3.5 sm:p-4 rounded-xl border border-white/5">
+                    <p class="text-[10px] sm:text-xs font-bold text-tftgold mb-1">⚡ 실시간 활성화 시너지 계수</p>
+                    <div id="synergy-results-container" class="grid grid-cols-2 gap-2">
+                        <!-- JS 실시간 반영 배지들 -->
                     </div>
                 </div>
             </div>
 
-            <!-- 미니 리롤 시뮬레이션 게임 (오른쪽) -->
-            <div class="lg:col-span-7 navy-glass rounded-3xl p-4 sm:p-6 md:p-8 border border-tftorange/30 relative">
+            <!-- 미니 리롤 시뮬레이션 게임 (오른쪽: lg:col-span-6) -->
+            <div class="lg:col-span-6 navy-glass rounded-3xl p-4 sm:p-6 md:p-8 border border-tftorange/30 relative">
                 <!-- 게임 디자인 톤 장식 -->
-                <div class="absolute -top-3 left-4 sm:left-6 bg-gradient-to-r from-tftorange to-tftgold text-tftdark text-[9px] sm:text-xs font-black uppercase px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-md">
+                <div class="absolute -top-3 left-4 sm:left-6 bg-gradient-to-r from-tftorange to-tftgold text-tftdark text-[10px] sm:text-xs font-black uppercase px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-md z-10">
                     🎰 미니 리롤 미니게임 훈련소
                 </div>
 
                 <div class="flex flex-col justify-between h-full pt-2">
                     <div>
-                        <div class="flex justify-between items-center mb-4">
+                        <div class="flex justify-between items-center mb-4 mt-2 sm:mt-0">
                             <h4 class="text-sm sm:text-lg md:text-xl font-bold flex items-center gap-1">
                                 🎲 골드를 굴려 기물을 강화하라!
                             </h4>
@@ -728,6 +754,11 @@
             sunIcon.classList.add('hidden');
             moonIcon.classList.remove('hidden');
         }
+        
+        // 시너지 빌더 다시 그리기 (컬러 밸런싱)
+        if (typeof renderSynergyBuilder === "function") {
+            renderSynergyBuilder();
+        }
     }
 
     function toggleTheme() {
@@ -750,6 +781,9 @@
             localStorage.setItem('tft-theme', 'light');
             triggerNotification("☀️ 라이트 모드가 활성화되었습니다.");
         }
+        
+        // 테마 변경에 따라 실시간 시너지 시뮬레이터 컬러 다시 적용
+        renderSynergyBuilder();
     }
 
     /* --- 모바일 메뉴 제어 시스템 --- */
@@ -760,11 +794,9 @@
         
         if (isHidden) {
             menu.classList.remove('hidden');
-            // 엑스 모양으로 변형
             icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
         } else {
             menu.classList.add('hidden');
-            // 햄버거 아이콘 복구
             icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
         }
     }
@@ -784,6 +816,187 @@
         document.body.style.overflow = ''; // 스크롤 잠금 해제
     }
 
+    /* --- STREAMING_CHUNK:Initializing Synergy Builder State and Champions... --- */
+    /* --- 실시간 시너지 시뮬레이터 제어 시스템 --- */
+    // 시뮬레이터용 챔피언 마스터 데이터 (동물특공대, 습격자, 메카, 암흑의 별)
+    const SYNERGY_CHAMPIONS = [
+        { name: "징크스", emoji: "🐰", traits: ["동물특공대", "습격자"], cost: 2, bg: "bg-blue-500/10 border-blue-500/20 text-blue-400" },
+        { name: "미스포츈", emoji: "🦊", traits: ["동물특공대"], cost: 4, bg: "bg-pink-500/10 border-pink-500/20 text-pink-400" },
+        { name: "사일러스", emoji: "🦇", traits: ["동물특공대", "메카"], cost: 1, bg: "bg-gray-500/10 border-gray-500/20 text-gray-300" },
+        { name: "잭스", emoji: "🦾", traits: ["메카", "습격자"], cost: 3, bg: "bg-purple-500/10 border-purple-500/20 text-purple-400" },
+        { name: "세트", emoji: "🤖", traits: ["메카"], cost: 4, bg: "bg-pink-500/10 border-pink-500/20 text-pink-400" },
+        { name: "샤코", emoji: "🤡", traits: ["암흑의 별", "습격자"], cost: 2, bg: "bg-blue-500/10 border-blue-500/20 text-blue-400" },
+        { name: "진", emoji: "🎭", traits: ["암흑의 별"], cost: 4, bg: "bg-pink-500/10 border-pink-500/20 text-pink-400" },
+        { name: "제라스", emoji: "🔮", traits: ["암흑의 별"], cost: 5, bg: "bg-yellow-500/10 border-yellow-500/20 text-yellow-400" },
+        { name: "올라프", emoji: "🪓", traits: ["습격자"], cost: 3, bg: "bg-purple-500/10 border-purple-500/20 text-purple-400" }
+    ];
+
+    // 시너지 상세 규칙 및 발동 기준점(Breakpoints)
+    const SYNERGY_RULES = {
+        "동물특공대": { levels: [2, 3], icon: "🐾", desc: "체력 +150 / 300 및 피해량 증가" },
+        "습격자": { levels: [2, 3], icon: "⚔️", desc: "공격속도 +15% / +35%" },
+        "메카": { levels: [2, 3], icon: "⚙️", desc: "전투 개시 시 메카 합체 및 체력 +20% / +45%" },
+        "암흑의 별": { levels: [2, 3], icon: "🌌", desc: "아군 사망 시 생존 아군 공격력 +15% / +30%" }
+    };
+
+    // 실시간 빌더 보드 상태 관리 (최대 5개 배치)
+    let synergyBoard = [];
+
+    // 빌더 UI 렌더링
+    function renderSynergyBuilder() {
+        const poolContainer = document.getElementById("synergy-pool-slots");
+        const boardContainer = document.getElementById("synergy-board-slots");
+        
+        // 1. 기물 풀 렌더링 (가로 2열, 각 기물 이름 옆에 시너지를 명확히 보여주는 레이아웃)
+        poolContainer.innerHTML = '';
+        SYNERGY_CHAMPIONS.forEach(champ => {
+            const isOnBoard = synergyBoard.some(b => b.name === champ.name);
+            const btn = document.createElement("button");
+            btn.onclick = () => toggleChampOnSynergyBoard(champ);
+            
+            // 전장에 들어가 있으면 은은한 아웃라인 처리
+            const borderClass = isOnBoard 
+                ? "border-tftgold shadow-lg shadow-tftgold/20 scale-[0.98] opacity-60" 
+                : "border-white/10 hover:border-white/30";
+            
+            const isLight = document.documentElement.classList.contains('light');
+            const traitTextColor = isLight ? "text-amber-800" : "text-tftgray";
+                
+            btn.className = `${champ.bg} border ${borderClass} rounded-xl p-2.5 flex items-center justify-between gap-2 transition-all cursor-pointer text-left select-none w-full`;
+            btn.innerHTML = `
+                <div class="flex items-center gap-2 min-w-0">
+                    <span class="text-xl sm:text-2xl flex-shrink-0">${champ.emoji}</span>
+                    <div class="flex flex-col min-w-0">
+                        <span class="text-xs font-bold truncate">${champ.name}</span>
+                        <span class="text-[9px] sm:text-[10px] ${traitTextColor} truncate font-medium">
+                            ${champ.traits.join(', ')}
+                        </span>
+                    </div>
+                </div>
+                <div class="text-[9px] font-bold text-tftgold bg-tftgold/10 border border-tftgold/20 px-1.5 py-0.5 rounded flex-shrink-0 font-mono">
+                    ${champ.cost}G
+                </div>
+            `;
+            poolContainer.appendChild(btn);
+        });
+
+        // 2. 활성화 전장 슬롯 렌더링 (5칸 고정)
+        boardContainer.innerHTML = '';
+        for (let i = 0; i < 5; i++) {
+            const champ = synergyBoard[i];
+            const slot = document.createElement("div");
+            
+            if (champ) {
+                slot.onclick = () => removeChampFromSynergyBoard(i);
+                slot.className = `relative bg-tftnavy/80 border border-tftgold/60 rounded-2xl h-14 sm:h-16 flex flex-col items-center justify-center cursor-pointer hover:bg-red-500/10 hover:border-red-500/40 group transition-all select-none`;
+                slot.innerHTML = `
+                    <span class="text-xl sm:text-2xl">${champ.emoji}</span>
+                    <span class="text-[8px] sm:text-[9px] font-bold text-gray-300 mt-0.5 truncate max-w-full">${champ.name}</span>
+                    <!-- 모바일/데스크톱 대응 오버레이 -->
+                    <div class="absolute inset-0 bg-red-600/90 rounded-2xl opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                        <span class="text-[8px] sm:text-[10px] font-bold text-white text-center leading-none">제외</span>
+                    </div>
+                `;
+            } else {
+                slot.className = `border border-dashed border-white/10 bg-white/2 rounded-2xl h-14 sm:h-16 flex items-center justify-center text-tftgray/20 text-sm font-semibold`;
+                slot.innerText = "+";
+            }
+            boardContainer.appendChild(slot);
+        }
+
+        // 배치 현황 숫자 갱신
+        document.getElementById("board-count").innerText = `${synergyBoard.length} / 5`;
+
+        // 3. 실시간 시너지 동적 연산 및 배지 반영
+        calculateActiveSynergies();
+    }
+
+    // 전장 넣기/빼기 토글 함수
+    function toggleChampOnSynergyBoard(champ) {
+        const index = synergyBoard.findIndex(b => b.name === champ.name);
+        if (index !== -1) {
+            // 이미 있으면 전장에서 제외
+            synergyBoard.splice(index, 1);
+        } else {
+            // 없으면 최대 5개 검증 후 추가
+            if (synergyBoard.length >= 5) {
+                triggerNotification("🚫 시너지 시뮬레이터 전장은 최대 5명까지만 구성할 수 있습니다.");
+                return;
+            }
+            synergyBoard.push(champ);
+        }
+        renderSynergyBuilder();
+    }
+
+    // 인덱스 기반 특정 전장 기물 제거
+    function removeChampFromSynergyBoard(index) {
+        synergyBoard.splice(index, 1);
+        renderSynergyBuilder();
+    }
+
+    // 실시간 시너지 계산 연산 알고리즘
+    function calculateActiveSynergies() {
+        const resultsContainer = document.getElementById("synergy-results-container");
+        resultsContainer.innerHTML = '';
+
+        // 현재 배치된 챔피언들의 계성(중복 제외) 수집 및 계수 적산
+        const synergyCounts = {
+            "동물특공대": 0,
+            "습격자": 0,
+            "메카": 0,
+            "암흑의 별": 0
+        };
+
+        synergyBoard.forEach(champ => {
+            champ.traits.forEach(trait => {
+                if (trait in synergyCounts) {
+                    synergyCounts[trait]++;
+                }
+            });
+        });
+
+        const isLightMode = document.documentElement.classList.contains('light');
+
+        // 정의된 4개 시너지별 배지 그리기
+        Object.keys(SYNERGY_RULES).forEach(trait => {
+            const currentCount = synergyCounts[trait];
+            const rule = SYNERGY_RULES[trait];
+            const activatedLevel = rule.levels.reduce((acc, lvl) => (currentCount >= lvl ? lvl : acc), 0);
+            
+            const isActive = activatedLevel > 0;
+            
+            // 디자인 테마에 맞는 색상 배정
+            let badgeBg = "bg-white/5 border-white/5 opacity-55 text-tftgray";
+            let starColor = "text-tftgray/40";
+            
+            if (isActive) {
+                starColor = "text-tftgold";
+                if (isLightMode) {
+                    badgeBg = "bg-amber-100 border-amber-300 text-amber-900 font-bold shadow-sm";
+                } else {
+                    badgeBg = "bg-gradient-to-r from-tftorange/20 to-tftgold/20 border-tftgold/40 text-tftgold font-semibold shadow-md shadow-tftorange/5";
+                }
+            }
+
+            const item = document.createElement("div");
+            item.className = `${badgeBg} border rounded-xl p-2 flex flex-col justify-between transition-all duration-300 h-16 sm:h-18`;
+            item.innerHTML = `
+                <div class="flex items-center justify-between w-full">
+                    <span class="text-[10px] sm:text-xs font-bold flex items-center gap-1">
+                        ${rule.icon} ${trait}
+                    </span>
+                    <span class="text-[9px] sm:text-xs font-mono font-bold ${isActive ? 'text-tftorange' : 'text-tftgray'}">
+                        (${currentCount}명)
+                    </span>
+                </div>
+                <div class="text-[8px] sm:text-[9.5px] truncate text-left tracking-tight opacity-90">
+                    ${rule.desc}
+                </div>
+            `;
+            resultsContainer.appendChild(item);
+        });
+    }
+
     /* --- STREAMING_CHUNK:Implementing reroll gameplay math and upgrades... --- */
     /* --- [핵심 인터랙티브 요소] 리롤 미니 게임 시뮬레이터 시스템 --- */
     // 챔피언 후보 기물 풀 데이터
@@ -795,7 +1008,7 @@
         { name: "야스오", emoji: "🌪️", synergy: "학살자", cost: 5, tier: 5, bg: "bg-yellow-500/10 border-yellow-500/20 text-yellow-400" }
     ];
 
-    // 영웅별 3성 달성 전용 맞춤 극찬 칭찬 메시지 풀 (1~2줄 분량으로 심플하게 최적화)
+    // 영웅별 3성 달성 전용 맞춤 극찬 칭찬 메시지 풀
     const PRAISE_MESSAGES = {
         "팽구": "귀여움 폭발! '3성 황금 팽구' 완성! 이 귀여운 펭구의 기운을 받아 실전에서도 기분 좋은 승리를 거두어 보세요!",
         "말랑이": "심쿵 유발! '3성 말랑이' 진화 성공! 끝까지 포기하지 않고 끈기 있게 덱을 빌드업한 당신의 전략이 빛났습니다.",
@@ -867,7 +1080,7 @@
         }, 3000);
     }
 
-    // 상점 렌더러 (반응형 폰트 및 모바일 최적화 배치 적용)
+    // 상점 렌더러
     function renderShop() {
         const shopSlots = document.getElementById('shop-slots');
         shopSlots.innerHTML = '';
@@ -1028,7 +1241,7 @@
             const upgradedChamp = { ...baseChamp, stars: 3, id: Date.now() };
             board.push(upgradedChamp);
             
-            // 💥 [추가 개발] 3성 달성 전용 연출 및 팝업 작동!
+            // 3성 달성 전용 연출 및 팝업 작동!
             triggerThreeStarCelebration(upgradedChamp);
         }
     }
@@ -1105,6 +1318,7 @@
         triggerNotification(`🪙 [${champ.name} ${champ.stars}성]을 판매하여 ${sellValue}G를 획득했습니다.`);
     }
 
+    /* --- STREAMING_CHUNK:Running Interactive Particle Canvas Engine... --- */
     // --- 은은한 캔버스 파티클 효과 메커니즘 ---
     const canvas = document.getElementById('hero-particles');
     const ctx = canvas.getContext('2d');
@@ -1186,6 +1400,10 @@
     window.onload = function() {
         initializeTheme();
         resetRerollGame();
+        
+        // [신규] 시너지 빌더 초기 세팅 가동
+        renderSynergyBuilder();
+        
         // 파티클 백그라운드 구동 개시
         initParticles();
         animateParticles();
