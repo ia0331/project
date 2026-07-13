@@ -449,7 +449,7 @@
                             <!-- 유저 소유 골드 정보 -->
                             <div class="flex items-center gap-1 bg-yellow-500/10 border border-yellow-500/30 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full">
                                 <span class="text-xs sm:text-sm">🪙</span>
-                                <span id="user-gold" class="text-tftgold font-bold text-xs sm:text-sm">20G</span>
+                                <span id="user-gold" class="text-tftgold font-bold text-xs sm:text-sm">30G</span>
                             </div>
                         </div>
                         <p class="text-[10px] sm:text-xs text-tftgray mb-4 leading-relaxed">
@@ -744,13 +744,13 @@
     ];
 
     // 게임 변수
-    let gold = 20;
+    let gold = 30;
     let board = []; // 최대 6개의 대기석 기물 저장
     let currentShop = []; // 현재 떠있는 5개의 상점 기물
 
     // 미니 게임 초기화
     function resetRerollGame() {
-        gold = 20;
+        gold = 30;
         board = [];
         currentShop = [];
         updateGoldUI();
